@@ -1,0 +1,144 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // ===============================================================
+    // Helper Functions
+    // ===============================================================
+    
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isAdmin() {
+      return isAuthenticated() && (
+        request.auth.token.email == 'admin@edusculptor.com' || 
+        request.auth.token.email == 'edusculptor@gmail.com' ||
+        (request.auth.token.email is string && request.auth.token.email.lower() == 'edusculptor@gmail.com') ||
+        (request.auth.token.email is string && request.auth.token.email.lower() == 'admin@edusculptor.com') ||
+        (exists(/databases/$(database)/documents/users/$(request.auth.uid)) && 
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin')
+      );
+    }
+
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+
+    function isValidEmail(email) {
+      return email is string && email.matches("^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$");
+    }
+
+    function hasOnlyAllowedFields(fields) {
+      return request.resource.data.keys().hasOnly(fields);
+    }
+
+    // ===============================================================
+    // Global Admin Rule
+    // ===============================================================
+    match /{document=**} {
+      allow read, write: if isAdmin();
+    }
+
+    // ===============================================================
+    // Collection Specific Rules (with explicit admin write/delete access)
+    // ===============================================================
+
+    match /applications/{doc} {
+      allow create: if true; // Public job application submissions
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /proposals/{doc} {
+      allow create: if true; // Public client proposals & service inquiries
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /service_requests/{doc} {
+      allow create: if true; // Public service lead inquiries
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /call_bookings/{doc} {
+      allow create: if true; // Strategy call bookings
+      allow read, update, delete: if isAdmin();
+    }
+
+    match /jobs/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /programs/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /blogs/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /services/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /portfolio/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /policies/{doc} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /event_registrations/{docId} {
+      allow read: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow update, delete: if isAdmin();
+    }
+
+    match /subscribers/{email} {
+      allow create: if isValidEmail(email);
+      allow get: if true;
+      allow read, write, delete: if isAdmin();
+    }
+
+    match /reviews/{userId} {
+      allow read: if true;
+      allow create, update, delete: if isOwner(userId) || isAdmin();
+    }
+
+    match /users/{userId} {
+      allow read: if isOwner(userId) || isAdmin();
+      allow write, delete: if isOwner(userId) || isAdmin();
+    }
+
+    match /enrollments/{enrollmentId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+
+    match /transactions/{transactionId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+
+    match /service_enrollments/{enrollmentId} {
+      allow create: if isAuthenticated() && request.resource.data.userId == request.auth.uid;
+      allow read, update, delete: if isAuthenticated() && (request.auth.uid == resource.data.userId || isAdmin());
+    }
+
+    match /events/{eventId} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+
+    match /issued_certificates/{certId} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+  }
+}

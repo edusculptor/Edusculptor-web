@@ -1,0 +1,13 @@
+{
+  "name": "EduSculptor Digital Agency",
+  "description": "EduSculptor is a premier Digital Agency and Software Company specializing in Digital Strategy, Custom CRM Software, UI/UX Design Setups, Cloud Architecture, and AI Generation Systems for modern enterprises and growing businesses.",
+  "requestFramePermissions": [],
+  "clientLogos": [
+    { "name": "TechCorp", "url": "https://picsum.photos/seed/techcorp/200/100" },
+    { "name": "Innovate", "url": "https://picsum.photos/seed/innovate/200/100" },
+    { "name": "SoftSystems", "url": "https://picsum.photos/seed/soft/200/100" },
+    { "name": "GlobalEdu", "url": "https://picsum.photos/seed/edu/200/100" },
+    { "name": "FutureMind", "url": "https://picsum.photos/seed/future/200/100" },
+    { "name": "DataFlow", "url": "https://picsum.photos/seed/data/200/100" }
+  ]
+}

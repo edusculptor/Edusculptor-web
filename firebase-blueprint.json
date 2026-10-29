@@ -1,0 +1,136 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information.",
+      "type": "object",
+      "properties": {
+        "fullName": { "type": "string", "description": "User's full name." },
+        "email": { "type": "string", "format": "email", "description": "User's email address." },
+        "contact": { "type": "string", "description": "Primary contact number." },
+        "altContact": { "type": "string", "description": "Alternative contact number." },
+        "college": { "type": "string", "description": "College or institution name." },
+        "branch": { "type": "string", "description": "Branch or stream of study." },
+        "photoURL": { "type": "string", "format": "uri", "description": "URL to user's profile photo." },
+        "role": { "type": "string", "description": "User's role (e.g., Student, Admin)." },
+        "updatedAt": { "type": "string", "format": "date-time", "description": "Last update timestamp." }
+      },
+      "required": ["fullName"]
+    },
+    "Enrollment": {
+      "title": "Enrollment",
+      "description": "Course enrollment and payment records.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the enrolled user." },
+        "userEmail": { "type": "string", "description": "Email of the enrolled user." },
+        "userName": { "type": "string", "description": "Name of the enrolled user." },
+        "courseId": { "type": "string", "description": "ID of the course." },
+        "courseTitle": { "type": "string", "description": "Title of the course." },
+        "amount": { "type": "number", "description": "Amount paid." },
+        "paymentId": { "type": "string", "description": "Razorpay payment ID." },
+        "orderId": { "type": "string", "description": "Razorpay order ID." },
+        "signature": { "type": "string", "description": "Razorpay signature." },
+        "status": { "type": "string", "enum": ["paid", "pending", "failed"], "description": "Payment status." },
+        "mode": { "type": "string", "enum": ["online", "offline"], "description": "Learning mode." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Enrollment timestamp." }
+      },
+      "required": ["userId", "courseId", "paymentId", "status"]
+    },
+    "Review": {
+      "title": "Review",
+      "description": "User reviews and testimonials.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user who wrote the review." },
+        "userName": { "type": "string", "description": "Name of the reviewer." },
+        "rating": { "type": "number", "description": "Rating out of 5." },
+        "comment": { "type": "string", "description": "Review text." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Creation timestamp." }
+      },
+      "required": ["userId", "rating", "comment"]
+    },
+    "GenericSubmission": {
+      "title": "GenericSubmission",
+      "description": "Generic form submission for proposals, bookings, etc.",
+      "type": "object",
+      "properties": {
+        "submittedAt": { "type": "string", "format": "date-time", "description": "Submission timestamp." }
+      }
+    },
+    "Subscriber": {
+      "title": "Subscriber",
+      "description": "Newsletter subscriber information.",
+      "type": "object",
+      "properties": {
+        "email": { "type": "string", "format": "email", "description": "Subscriber's email address." },
+        "subscribedAt": { "type": "string", "format": "date-time", "description": "Subscription timestamp." }
+      },
+      "required": ["email"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "Financial transaction records.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "description": "ID of the user." },
+        "userEmail": { "type": "string", "description": "Email of the user." },
+        "userName": { "type": "string", "description": "Name of the user." },
+        "amount": { "type": "number", "description": "Transaction amount." },
+        "paymentId": { "type": "string", "description": "Payment gateway ID." },
+        "orderId": { "type": "string", "description": "Order ID." },
+        "type": { "type": "string", "enum": ["credit", "debit"], "description": "Transaction type." },
+        "description": { "type": "string", "description": "Transaction description." },
+        "status": { "type": "string", "enum": ["completed", "pending", "failed"], "description": "Transaction status." },
+        "createdAt": { "type": "string", "format": "date-time", "description": "Transaction timestamp." }
+      },
+      "required": ["userId", "amount", "type", "status"]
+    }
+  },
+  "firestore": {
+    "users/{userId}": {
+      "schema": "User",
+      "description": "User profile documents."
+    },
+    "enrollments/{enrollmentId}": {
+      "schema": "Enrollment",
+      "description": "Course enrollment records."
+    },
+    "transactions/{transactionId}": {
+      "schema": "Transaction",
+      "description": "Financial transactions."
+    },
+    "reviews/{userId}": {
+      "schema": "Review",
+      "description": "User reviews."
+    },
+    "proposals/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Project proposals."
+    },
+    "service_requests/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Incoming service lead inquiries."
+    },
+    "call_bookings/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Call bookings."
+    },
+    "applications/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Job applications."
+    },
+    "jobs/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Job listings."
+    },
+    "blogs/{docId}": {
+      "schema": "GenericSubmission",
+      "description": "Blog posts."
+    },
+    "subscribers/{docId}": {
+      "schema": "Subscriber",
+      "description": "Newsletter subscribers."
+    }
+  }
+}
