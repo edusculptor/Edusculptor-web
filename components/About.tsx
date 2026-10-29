@@ -36,25 +36,25 @@ interface TeamMember {
 
 const teamMembers: TeamMember[] = [
   {
-    name: "Prateek Bhoyar",
+    name: "Pratik Bhoyar",
     role: "Founder & Chief Executive Officer",
     title: "Executive Leadership & Strategy",
     bio: "Founded the agency in 2022 as a passionate college entrepreneur with a clear vision to build something transformative. Steers overall company direction, high-level client partnerships, and strategic digital expansion.",
-    img: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=600&q=80",
+    img: "https://media.licdn.com/dms/image/v2/D5603AQGxsxxDzx1ESQ/profile-displayphoto-scale_400_400/B56ZpDh2SjIcAg-/0/1762069539126?e=1795046400&v=beta&t=qs9Fqcc2bkeTFhT7miOhMyUBSdI3tIcZO3shBl4xDF4",
     skills: ["Agency Strategy", "Client Growth", "Bespoke Solutions", "Business Operations"],
     badge: "Founder & CEO"
   },
   {
-    name: "Radhini Sagne",
+    name: "Radhini Sagane",
     role: "Head of Human Resources & People Operations",
     title: "People & Workplace Culture",
     bio: "Orchestrates organizational culture, team talent management, internal communications, and operational harmony. Ensures our client accounts and internal workflows run with seamless efficiency.",
-    img: "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=600&q=80",
+    img: "https://media.licdn.com/dms/image/v2/D4E03AQEBWp-tq5_m9w/profile-displayphoto-crop_800_800/B4EZ_gIn_XJEAI-/0/1786171786987?e=1795046400&v=beta&t=tHmYcBhMnqCBaCBDkw_qSiImWMxcU4_9UN63ZbvCpzQ",
     skills: ["People Operations", "Talent Acquisition", "Process Optimization", "Client Relations"],
     badge: "HR & Operations"
   },
   {
-    name: "Meenal Movad",
+    name: "Minal Mohod",
     role: "Head of Technology & Business Sales",
     title: "Technical Architecture & Growth",
     bio: "Directs both core technical solutions and commercial client engagement. Drives scalable software architectures, CRM deployments, and tailored technology proposals that solve real-world business bottlenecks.",
